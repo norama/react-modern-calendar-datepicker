@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "types": "index.d.ts",
   "scripts": {
+    "prepublish": "yarn build",
     "start": "webpack-dev-server --open --mode development",
     "lint": "concurrently \"eslint src\" \"prettier --check \"./src/**/*.css\"\" ",
     "lint:write": "prettier --write \"./src/**/*.js\"  \"./src/**/*.css\"",
