@@ -28,7 +28,7 @@ const AppRange = () => {
       <DatePicker
         value={selectedDayRange}
         onChange={(v) => {console.log(v); setSelectedDayRange(v);}}
-        numberOfMonths={1}
+        numberOfMonths={3}
         minimumDate={{year: 2020, month: 11, day: 8}}
         maximumDate={{year: 2021, month: 6, day: 5}}
         shouldHighlightWeekends

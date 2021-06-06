@@ -5,8 +5,10 @@ import { getSlideDate, animateContent, handleSlideAnimationEnd } from '../shared
 import { useLocaleUtils, useLocaleLanguage } from '../shared/hooks';
 
 const Header = ({
-  maximumDate,
   minimumDate,
+  maximumDate,
+  isFirst,
+  isLast,
   onMonthChange,
   activeDate,
   monthChangeDirection,
@@ -96,12 +98,18 @@ const Header = ({
   };
 
   const isNextMonthArrowDisabled =
-    maximumDate &&
-    isBeforeDate(maximumDate, { ...activeDate, month: activeDate.month + 1, day: 1 });
+    !isLast || (
+        maximumDate &&
+        isBeforeDate(maximumDate, { ...activeDate, month: activeDate.month + 1, day: 1 })
+    );
+
   const isPreviousMonthArrowDisabled =
-    minimumDate &&
-    (isBeforeDate({ ...activeDate, day: 1 }, minimumDate) ||
-      isSameDay(minimumDate, { ...activeDate, day: 1 }));
+    !isFirst || (
+        minimumDate &&
+        (isBeforeDate({ ...activeDate, day: 1 }, minimumDate) ||
+          isSameDay(minimumDate, { ...activeDate, day: 1 }))
+    );
+    
 
   const onMonthChangeTrigger = direction => {
     const isMonthChanging = Array.from(monthYearWrapperElement.current.children).some(child =>

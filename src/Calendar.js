@@ -165,6 +165,8 @@ const Calendar = ({
                 onDisabledDayError={onDisabledDayError}
                 minimumDate={minimumDate}
                 maximumDate={maximumDate}
+                isFirst={index === 0}
+                isLast={index === months.length - 1}
                 minimumMonth={minimumMonths[index]}
                 maximumMonth={maximumMonths[index]}
                 selectorStartingYear={selectorStartingYear}

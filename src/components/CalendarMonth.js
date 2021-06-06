@@ -21,6 +21,8 @@ const CalendarMonth = ({
     onDisabledDayError,
     minimumDate,
     maximumDate,
+    isFirst,
+    isLast,
     minimumMonth,
     maximumMonth,
     selectorStartingYear,
@@ -48,8 +50,10 @@ const CalendarMonth = ({
 
         <div className="Calendar__month">
             <Header
-                maximumDate={maximumDate}
                 minimumDate={minimumDate}
+                maximumDate={maximumDate}
+                isFirst={isFirst}
+                isLast={isLast}
                 activeDate={date}
                 onMonthChange={onMonthChange}
                 onMonthSelect={toggleMonthSelector}
