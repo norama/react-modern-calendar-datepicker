@@ -80,7 +80,6 @@
   padding-top: 1.2em;
   display: flex;
   flex-direction: column;
-  width: 33em;
   z-index: 10;
   max-width: 90vw;
   min-height: 36.7em;
@@ -448,6 +447,15 @@
   position: relative;
 }
 
+.Calendar__months {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Calendar__month {
+  position: relative;
+}
+
 .Calendar__weekDay {
   display: block;
   width: calc(100% / 7);
@@ -457,6 +465,7 @@
 
 .Calendar__sectionWrapper {
   position: relative;
+  width: 33em;
   min-height: 25.8em;
   overflow: hidden;
 }

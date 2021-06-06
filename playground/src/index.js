@@ -10,5 +10,23 @@ const App = () => {
   return <DatePicker value={selectedDay} onChange={setValue} shouldHighlightWeekends />;
 };
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const AppRange = () => {
+    // ✅ a change in default state: { from: ..., to: ... }
+    const [selectedDayRange, setSelectedDayRange] = useState({
+      from: null,
+      to: null
+    });
+    return (
+      <DatePicker
+        value={selectedDayRange}
+        onChange={setSelectedDayRange}
+        numberOfMonths={3}
+        minimumDate={{year: 2020, month: 11, day: 1}}
+        maximumDate={{year: 2021, month: 8, day: 1}}
+        shouldHighlightWeekends
+      />
+    );
+  };
+
+ReactDOM.render(<AppRange />, document.getElementById('root'));
 serviceWorker.unregister();

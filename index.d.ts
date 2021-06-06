@@ -21,6 +21,7 @@ export interface CalendarProps<TValue extends Value> {
   selectorStartingYear?: number;
   selectorEndingYear?: number;
   locale?: string | Locale;
+  numberOfMonths?: number;
   minimumDate?: Day;
   maximumDate?: Day;
   disabledDays?: Day[];

@@ -278,6 +278,7 @@ const DaysList = ({
 
 DaysList.defaultProps = {
   onChange: () => {},
+  onSlideChange: () => {},
   onDisabledDayError: () => {},
   disabledDays: [],
   calendarTodayClassName: '',

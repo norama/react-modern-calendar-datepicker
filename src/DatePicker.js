@@ -26,6 +26,7 @@ const DatePicker = ({
   colorPrimary,
   colorPrimaryLight,
   slideAnimationDuration,
+  numberOfMonths,
   minimumDate,
   maximumDate,
   selectorStartingYear,
@@ -177,6 +178,7 @@ const DatePicker = ({
               colorPrimaryLight={colorPrimaryLight}
               slideAnimationDuration={slideAnimationDuration}
               onDisabledDayError={onDisabledDayError}
+              numberOfMonths={numberOfMonths}
               minimumDate={minimumDate}
               maximumDate={maximumDate}
               selectorStartingYear={selectorStartingYear}
@@ -195,6 +197,7 @@ const DatePicker = ({
 };
 
 DatePicker.defaultProps = {
+  numberOfMonths: 1,
   wrapperClassName: '',
   locale: 'en',
   calendarPopperPosition: 'auto',

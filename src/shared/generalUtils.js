@@ -40,6 +40,15 @@ const getDateAccordingToMonth = (date, direction) => {
   return newDate;
 };
 
+const getCalendarMonths = (date, numberOfMonths) => {
+    let months = [date];
+    for (let i=1; i < numberOfMonths; i++) {
+        date = getDateAccordingToMonth(date, 'NEXT');
+        months.push(date);
+    }
+    return months;
+}
+
 const hasProperty = (object, propertyName) =>
   Object.prototype.hasOwnProperty.call(object || {}, propertyName);
 
@@ -65,5 +74,6 @@ export {
   shallowClone,
   deepCloneObject,
   getDateAccordingToMonth,
+  getCalendarMonths,
   getValueType,
 };
