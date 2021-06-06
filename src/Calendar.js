@@ -4,7 +4,7 @@ import { getDateAccordingToMonth, getCalendarMonths, shallowClone, getValueType 
 import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constants';
 import { useLocaleUtils, useLocaleLanguage } from './shared/hooks';
 
-import { Header, MonthSelector, YearSelector, DaysList } from './components';
+import CalendarMonth from './components/CalendarMonth';
 
 const Calendar = ({
   value,
@@ -34,8 +34,6 @@ const Calendar = ({
   const [mainState, setMainState] = useState({
     activeDate: null,
     monthChangeDirection: '',
-    isMonthSelectorOpen: false,
-    isYearSelectorOpen: false,
   });
 
   useEffect(() => {
@@ -60,13 +58,6 @@ const Calendar = ({
   const { getToday } = useLocaleUtils(locale);
   const { weekDays: weekDaysList, isRtl } = useLocaleLanguage(locale);
   const today = getToday();
-
-  const createStateToggler = property => () => {
-    setMainState({ ...mainState, [property]: !mainState[property] });
-  };
-
-  const toggleMonthSelector = createStateToggler('isMonthSelectorOpen');
-  const toggleYearSelector = createStateToggler('isYearSelectorOpen');
 
   const getComputedActiveDate = () => {
     const valueType = getValueType(value);
@@ -105,7 +96,6 @@ const Calendar = ({
     setMainState({
       ...mainState,
       activeDate: { ...activeDate, month: newMonthNumber },
-      isMonthSelectorOpen: false,
     });
   };
 
@@ -113,7 +103,6 @@ const Calendar = ({
     setMainState({
       ...mainState,
       activeDate: { ...activeDate, year },
-      isYearSelectorOpen: false,
     });
   };
 
@@ -134,65 +123,33 @@ const Calendar = ({
       <div className="Calendar__months">
 
         { months.map((month, index) => (
+            <CalendarMonth
+                key={index}
+                value={value}
+                date={month}
+                onChange={onChange}
+                onYearSelect={selectYear}
+                onMonthSelect={selectMonth}
+                onMonthChange={handleMonthChange}
+                monthChangeDirection={mainState.monthChangeDirection}
+                onUpdateDate={index === 0 ? updateDate : undefined}
+                weekdays={weekdays}
+                calendarTodayClassName={calendarTodayClassName}
+                calendarSelectedDayClassName={calendarSelectedDayClassName}
+                calendarRangeStartClassName={calendarRangeStartClassName}
+                calendarRangeBetweenClassName={calendarRangeBetweenClassName}
+                calendarRangeEndClassName={calendarRangeEndClassName}
+                disabledDays={disabledDays}
+                onDisabledDayError={onDisabledDayError}
+                minimumDate={minimumDate}
+                maximumDate={maximumDate}
+                selectorStartingYear={selectorStartingYear}
+                selectorEndingYear={selectorEndingYear}
+                locale={locale}
+                shouldHighlightWeekends={shouldHighlightWeekends}
+                customDaysClassName={customDaysClassName}
+            />
 
-            <div className="Calendar__month">
-                <Header
-                    maximumDate={maximumDate}
-                    minimumDate={minimumDate}
-                    activeDate={month}
-                    onMonthChange={handleMonthChange}
-                    onMonthSelect={toggleMonthSelector}
-                    onYearSelect={toggleYearSelector}
-                    monthChangeDirection={mainState.monthChangeDirection}
-                    isMonthSelectorOpen={mainState.isMonthSelectorOpen}
-                    isYearSelectorOpen={mainState.isYearSelectorOpen}
-                    locale={locale}
-                />
-
-                <MonthSelector
-                    isOpen={mainState.isMonthSelectorOpen}
-                    activeDate={activeDate}
-                    onMonthSelect={selectMonth}
-                    maximumDate={maximumDate}
-                    minimumDate={minimumDate}
-                    locale={locale}
-                />
-
-                <YearSelector
-                    isOpen={mainState.isYearSelectorOpen}
-                    activeDate={activeDate}
-                    onYearSelect={selectYear}
-                    selectorStartingYear={selectorStartingYear}
-                    selectorEndingYear={selectorEndingYear}
-                    maximumDate={maximumDate}
-                    minimumDate={minimumDate}
-                    locale={locale}
-                />
-
-                <div className="Calendar__weekDays">{weekdays}</div>
-
-                <DaysList
-                    activeDate={month}
-                    value={value}
-                    monthChangeDirection={mainState.monthChangeDirection}
-                    onSlideChange={index === 0 ? updateDate : undefined}
-                    disabledDays={disabledDays}
-                    onDisabledDayError={onDisabledDayError}
-                    minimumDate={minimumDate}
-                    maximumDate={maximumDate}
-                    onChange={onChange}
-                    calendarTodayClassName={calendarTodayClassName}
-                    calendarSelectedDayClassName={calendarSelectedDayClassName}
-                    calendarRangeStartClassName={calendarRangeStartClassName}
-                    calendarRangeEndClassName={calendarRangeEndClassName}
-                    calendarRangeBetweenClassName={calendarRangeBetweenClassName}
-                    locale={locale}
-                    shouldHighlightWeekends={shouldHighlightWeekends}
-                    customDaysClassName={customDaysClassName}
-                    isQuickSelectorOpen={mainState.isYearSelectorOpen || mainState.isMonthSelectorOpen}
-                />
-
-            </div>
         ))}
 
       </div>
