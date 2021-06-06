@@ -194,4 +194,9 @@ const Header = ({
   );
 };
 
+Header.defaultProps = {
+  isFirst: true,
+  isLast: true
+};
+
 export default Header;
