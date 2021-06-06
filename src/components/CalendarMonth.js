@@ -21,6 +21,8 @@ const CalendarMonth = ({
     onDisabledDayError,
     minimumDate,
     maximumDate,
+    minimumMonth,
+    maximumMonth,
     selectorStartingYear,
     selectorEndingYear,
     locale,
@@ -62,8 +64,8 @@ const CalendarMonth = ({
                 isOpen={isMonthSelectorOpen}
                 activeDate={date}
                 onMonthSelect={handleMonthSelect}
-                maximumDate={maximumDate}
-                minimumDate={minimumDate}
+                maximumDate={maximumMonth}
+                minimumDate={minimumMonth}
                 locale={locale}
             />
 
@@ -73,8 +75,8 @@ const CalendarMonth = ({
                 onYearSelect={handleYearSelect}
                 selectorStartingYear={selectorStartingYear}
                 selectorEndingYear={selectorEndingYear}
-                maximumDate={maximumDate}
-                minimumDate={minimumDate}
+                maximumDate={maximumMonth}
+                minimumDate={minimumMonth}
                 locale={locale}
             />
 

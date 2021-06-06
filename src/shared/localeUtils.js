@@ -46,6 +46,16 @@ const utils = (locale = 'en') => {
     return nativeDay > nativeFrom && nativeDay < nativeTo;
   };
 
+  const toDayInRange = (day, from, to) => {
+    if (isBeforeDate(day, from)) {
+        day = {...from};
+    }
+    if (isBeforeDate(to, day)) {
+        day = {...to};
+    }
+    return day;
+  };
+
   return {
     getToday,
     getMonthName,
@@ -54,6 +64,7 @@ const utils = (locale = 'en') => {
     getMonthFirstWeekday,
     isBeforeDate,
     checkDayInDayRange,
+    toDayInRange,
     getLanguageDigits,
   };
 };

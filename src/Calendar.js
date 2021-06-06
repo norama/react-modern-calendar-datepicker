@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-import { getDateAccordingToMonth, getCalendarMonths, shallowClone, getValueType } from './shared/generalUtils';
+import { getDateAccordingToMonth, getDeltaMonth, getCalendarMonths, shallowClone, getValueType } from './shared/generalUtils';
 import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constants';
 import { useLocaleUtils, useLocaleLanguage } from './shared/hooks';
 
@@ -55,16 +55,21 @@ const Calendar = ({
     };
   }, [calendarElement]);
 
-  const { getToday } = useLocaleUtils(locale);
+  const { getToday, toDayInRange, isBeforeDate } = useLocaleUtils(locale);
   const { weekDays: weekDaysList, isRtl } = useLocaleLanguage(locale);
   const today = getToday();
 
   const getComputedActiveDate = () => {
     const valueType = getValueType(value);
-    if (valueType === TYPE_MUTLI_DATE && value.length) return shallowClone(value[0]);
-    if (valueType === TYPE_SINGLE_DATE && value) return shallowClone(value);
-    if (valueType === TYPE_RANGE && value.from) return shallowClone(value.from);
-    return shallowClone(today);
+    let v;
+    if (valueType === TYPE_MUTLI_DATE && value.length) v = value[0];
+    if (valueType === TYPE_SINGLE_DATE && value) v = value;
+    if (valueType === TYPE_RANGE && value.from) v = value.from;
+    v = v || toDayInRange(shallowClone(today), minimumDate, maximumDate);
+    while (isBeforeDate(maximumDate, getDeltaMonth(v, numberOfMonths - 1))) {
+        v = getDeltaMonth(v, -1);
+    }
+    return v;
   };
 
   const activeDate = mainState.activeDate
@@ -76,6 +81,14 @@ const Calendar = ({
       {weekDay.short}
     </abbr>
   ));
+
+  const handleChange = (value) => {
+    setMainState({
+      ...mainState,
+      activeDate
+    });
+    onChange(value);
+  };
 
   const handleMonthChange = direction => {
     setMainState({
@@ -92,21 +105,30 @@ const Calendar = ({
     });
   };
 
-  const selectMonth = newMonthNumber => {
+  const selectMonth = (newMonthNumber, delta) => {
     setMainState({
       ...mainState,
-      activeDate: { ...activeDate, month: newMonthNumber },
+      activeDate: getDeltaMonth({
+                        ...getDeltaMonth(activeDate, delta),
+                        month: newMonthNumber
+                    }, -delta),
     });
   };
 
-  const selectYear = year => {
+  const selectYear = (newYearNumber) => {
     setMainState({
       ...mainState,
-      activeDate: { ...activeDate, year },
+      activeDate: toDayInRange({ ...activeDate, year: newYearNumber }, minimumDate, maximumDate),
     });
   };
 
   const months = getCalendarMonths(activeDate, numberOfMonths);
+  const minimumMonths = months.map((month, index) => (
+    minimumDate ? getDeltaMonth(minimumDate, index) : null
+  ));
+  const maximumMonths = months.map((month, index) => (
+    maximumDate ? getDeltaMonth(maximumDate, index - numberOfMonths + 1) : null
+  ));
 
   return (
     <div
@@ -127,9 +149,9 @@ const Calendar = ({
                 key={index}
                 value={value}
                 date={month}
-                onChange={onChange}
+                onChange={handleChange}
                 onYearSelect={selectYear}
-                onMonthSelect={selectMonth}
+                onMonthSelect={(newMonthNumber) => selectMonth(newMonthNumber, index)}
                 onMonthChange={handleMonthChange}
                 monthChangeDirection={mainState.monthChangeDirection}
                 onUpdateDate={index === 0 ? updateDate : undefined}
@@ -143,6 +165,8 @@ const Calendar = ({
                 onDisabledDayError={onDisabledDayError}
                 minimumDate={minimumDate}
                 maximumDate={maximumDate}
+                minimumMonth={minimumMonths[index]}
+                maximumMonth={maximumMonths[index]}
                 selectorStartingYear={selectorStartingYear}
                 selectorEndingYear={selectorEndingYear}
                 locale={locale}

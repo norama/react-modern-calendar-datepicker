@@ -40,6 +40,18 @@ const getDateAccordingToMonth = (date, direction) => {
   return newDate;
 };
 
+const getDeltaMonth = (date, delta) => {
+    if (delta === 0) {
+        return date;
+    }
+    const direction = delta > 0 ? 'NEXT' : 'PREV';
+    delta = Math.abs(delta);
+    while (--delta >= 0) {
+        date = getDateAccordingToMonth(date, direction);
+    }
+    return date;
+}
+
 const getCalendarMonths = (date, numberOfMonths) => {
     let months = [date];
     for (let i=1; i < numberOfMonths; i++) {
@@ -74,6 +86,7 @@ export {
   shallowClone,
   deepCloneObject,
   getDateAccordingToMonth,
+  getDeltaMonth,
   getCalendarMonths,
   getValueType,
 };

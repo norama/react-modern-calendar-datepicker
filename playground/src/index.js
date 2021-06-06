@@ -7,7 +7,15 @@ import * as serviceWorker from './serviceWorker';
 
 const App = () => {
   const [selectedDay, setValue] = useState(null);
-  return <DatePicker value={selectedDay} onChange={setValue} shouldHighlightWeekends />;
+  return (
+    <DatePicker
+        value={selectedDay}
+        onChange={setValue}
+        minimumDate={{year: 2020, month: 11, day: 1}}
+        maximumDate={{year: 2021, month: 8, day: 1}}
+        shouldHighlightWeekends
+    />
+  );
 };
 
 const AppRange = () => {
@@ -19,10 +27,10 @@ const AppRange = () => {
     return (
       <DatePicker
         value={selectedDayRange}
-        onChange={setSelectedDayRange}
-        numberOfMonths={3}
-        minimumDate={{year: 2020, month: 11, day: 1}}
-        maximumDate={{year: 2021, month: 8, day: 1}}
+        onChange={(v) => {console.log(v); setSelectedDayRange(v);}}
+        numberOfMonths={1}
+        minimumDate={{year: 2020, month: 11, day: 8}}
+        maximumDate={{year: 2021, month: 6, day: 5}}
         shouldHighlightWeekends
       />
     );
