@@ -7,13 +7,13 @@ import * as serviceWorker from './serviceWorker';
 
 const App = () => {
   const [selectedDay, setValue] = useState(null);
+  const customClassName = 'myCustomDayClassName';
+  const customDayToAddClass = { year: 2020, month: 3, day: 5 };
   return (
     <DatePicker
-        value={selectedDay}
         onChange={setValue}
-        minimumDate={{year: 2020, month: 11, day: 1}}
-        maximumDate={{year: 2021, month: 8, day: 1}}
-        shouldHighlightWeekends
+        value={{ year: 2020, month: 3, day: 1 }}
+        customDaysClassName={[{ ...customDayToAddClass, className: customClassName }]}
     />
   );
 };
@@ -36,5 +36,5 @@ const AppRange = () => {
     );
   };
 
-ReactDOM.render(<AppRange />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 serviceWorker.unregister();

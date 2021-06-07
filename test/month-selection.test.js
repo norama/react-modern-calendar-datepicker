@@ -6,7 +6,7 @@ import { GREGORIAN_MONTHS, PERSIAN_MONTHS } from '../src/shared/constants';
 
 const renderMonthSelector = (shouldOpenSelector = true, props) => {
   const { getAllByLabelText, getByTestId, rerender, getByText } = render(<Calendar {...props} />);
-  const thisMonthText = new Date().toLocaleString('default', { month: 'long' });
+  const thisMonthText = new Date().toLocaleString('en', { month: 'long' });
   const [monthButton] = getAllByLabelText(/open month selector/i);
   const monthSelector = getByTestId('month-selector');
   const monthSelectorWrapper = getByTestId('month-selector-wrapper');

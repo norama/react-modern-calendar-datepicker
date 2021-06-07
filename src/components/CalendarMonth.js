@@ -40,11 +40,11 @@ const CalendarMonth = ({
     const handleYearSelect = (yearNumber) => {
         setYearSelectorOpen(false);
         onYearSelect(yearNumber);
-    }
+    };
     const handleMonthSelect = (monthNumber) => {
         setMonthSelectorOpen(false);
         onMonthSelect(monthNumber);
-    }
+    };
 
     return (
 

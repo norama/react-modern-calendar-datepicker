@@ -14,7 +14,9 @@ const flatDays = section =>
 
 const renderCalendar = props => {
   const selectors = render(<Calendar {...props} />);
-  const sectionWrapper = selectors.getByTestId('days-section-wrapper');
+  const sectionWrapperAll = selectors.getAllByTestId('days-section-wrapper');
+  const sectionWrapper = sectionWrapperAll[sectionWrapperAll.length - 1];
+
   const activeSection = Array.from(sectionWrapper.children).find(child =>
     child.classList.contains('-shown'),
   );
@@ -22,8 +24,8 @@ const renderCalendar = props => {
   const standardDays = days.filter(day => !day.classList.contains('-blank'));
   const getDay = day => getByText(activeSection, String(day));
 
-  const sections = Array.from(selectors.getByTestId('days-section-wrapper').children);
-  const monthYearItems = Array.from(selectors.getByTestId('month-year-container').children);
+  const sections = Array.from(sectionWrapper.children);
+  const monthYearItems = Array.from(selectors.getAllByTestId('month-year-container')[0].children);
   const endSlideAnimation = () => {
     const findAnimatedChild = child => child.classList.contains('-shownAnimated');
     const animatingMonthYearItem = monthYearItems.find(findAnimatedChild);
@@ -356,8 +358,9 @@ describe('Calendar Days', () => {
       const value = { from: { year: 2019, month: 10, day: 9 }, to: null };
       const disabledDays = [{ year: 2019, month: 10, day: 10 }];
       const onDisabledDayError = jest.fn();
+      const onChange = () => {};
 
-      const { getDay } = renderCalendar({ value, disabledDays, onDisabledDayError });
+      const { getDay } = renderCalendar({ value, disabledDays, onDisabledDayError, onChange });
       fireEvent.click(getDay(12)); // disabled day is between 9 and 12
 
       expect(onDisabledDayError).toHaveBeenCalledTimes(1);
@@ -373,6 +376,8 @@ describe('Calendar Days', () => {
         value: { year: 2020, month: 3, day: 1 },
         customDaysClassName: [{ ...customDayToAddClass, className: customClassName }],
       });
+
+      console.log('---->>>>> ', getDay(customDayToAddClass.day));
 
       expect(getDay(customDayToAddClass.day)).toHaveClass(customClassName);
       expect(

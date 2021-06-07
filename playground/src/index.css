@@ -22,3 +22,8 @@ body {
   padding-top: 10rem;
   height: 100%;
 }
+
+.myCustomDayClassName {
+    background-color: blueviolet;
+    color: white !important;
+}

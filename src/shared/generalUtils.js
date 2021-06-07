@@ -50,7 +50,7 @@ const getDeltaMonth = (date, delta) => {
         date = getDateAccordingToMonth(date, direction);
     }
     return date;
-}
+};
 
 const getCalendarMonths = (date, numberOfMonths) => {
     let months = [date];
@@ -59,7 +59,7 @@ const getCalendarMonths = (date, numberOfMonths) => {
         months.push(date);
     }
     return months;
-}
+};
 
 const hasProperty = (object, propertyName) =>
   Object.prototype.hasOwnProperty.call(object || {}, propertyName);
