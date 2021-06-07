@@ -73,7 +73,16 @@ const Calendar = ({
     return v;
   };
 
-  const activeDate = mainState.activeDate && !computeActiveDate
+  useEffect(() => {
+      if (computeActiveDate) {
+        setMainState({
+            ...mainState,
+            activeDate: getComputedActiveDate()
+        });
+      }
+  }, computeActiveDate);
+
+  const activeDate = mainState.activeDate
     ? shallowClone(mainState.activeDate)
     : getComputedActiveDate();
 
