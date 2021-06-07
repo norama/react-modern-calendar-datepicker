@@ -7,7 +7,9 @@ This fork implements the feature of showing more consecutive months in a row.
 New properties added to `DatePicker` and `Calendar`:
 
 - `numberOfMonths`: number of consecutive months to be shown (default: 1)
-- `computeActiveDate`: computes shown part of calendar based on value (default: false, that is, use previously set active date)
+- `computeActiveDate`:
+    - computes shown part of calendar based on value if `true`,
+    - uses previously set active date if `false ` (default)
 
 For further information refer to the [original documentation](https://kiarash-z.github.io/react-modern-calendar-datepicker/).
 
