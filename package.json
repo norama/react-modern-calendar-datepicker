@@ -1,6 +1,6 @@
 {
   "name": "norama-react-modern-calendar-datepicker",
-  "version": "3.1.8",
+  "version": "3.1.9",
   "description": "A modern, beautiful, customizable date picker for React",
   "main": "lib/index.js",
   "types": "index.d.ts",
@@ -22,10 +22,11 @@
     "index.d.ts"
   ],
   "author": "Kiarash Zarinmehr",
-  "homepage": "https://kiarash-z.github.io/react-modern-calendar-datepicker",
+  "contributors": ["M.Hassan Mojab", "Nóra Máté"],
+  "homepage": "https://github.com/norama/react-modern-calendar-datepicker",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Kiarash-Z/react-modern-calendar-datepicker.git"
+    "url": "https://github.com/norama/react-modern-calendar-datepicker.git"
   },
   "bugs": {
     "url": "https://github.com/Kiarash-Z/react-modern-calendar-datepicker/issues"
