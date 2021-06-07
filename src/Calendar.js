@@ -80,7 +80,7 @@ const Calendar = ({
             activeDate: getComputedActiveDate()
         });
       }
-  }, computeActiveDate);
+  }, [computeActiveDate]);
 
   const activeDate = mainState.activeDate
     ? shallowClone(mainState.activeDate)
