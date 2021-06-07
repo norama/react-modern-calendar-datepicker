@@ -115,10 +115,15 @@ const Calendar = ({
     });
   };
 
-  const selectYear = (newYearNumber) => {
+  const selectYear = (newYearNumber, delta) => {
     setMainState({
       ...mainState,
-      activeDate: toDayInRange({ ...activeDate, year: newYearNumber }, minimumDate, maximumDate),
+      activeDate: getDeltaMonth(
+                    toDayInRange({
+                        ...getDeltaMonth(activeDate, delta),
+                        year: newYearNumber
+                    }, minimumDate, maximumDate),
+                    -delta)
     });
   };
 
@@ -150,7 +155,7 @@ const Calendar = ({
                 value={value}
                 date={month}
                 onChange={handleChange}
-                onYearSelect={selectYear}
+                onYearSelect={(newYearNumber) => selectYear(newYearNumber, index)}
                 onMonthSelect={(newMonthNumber) => selectMonth(newMonthNumber, index)}
                 onMonthChange={handleMonthChange}
                 monthChangeDirection={mainState.monthChangeDirection}
