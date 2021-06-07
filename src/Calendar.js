@@ -9,6 +9,7 @@ import CalendarMonth from './components/CalendarMonth';
 const Calendar = ({
   value,
   onChange,
+  computeActiveDate,
   onDisabledDayError,
   calendarClassName,
   calendarTodayClassName,
@@ -72,7 +73,7 @@ const Calendar = ({
     return v;
   };
 
-  const activeDate = mainState.activeDate
+  const activeDate = mainState.activeDate && !computeActiveDate
     ? shallowClone(mainState.activeDate)
     : getComputedActiveDate();
 
@@ -192,6 +193,7 @@ const Calendar = ({
 
 Calendar.defaultProps = {
   numberOfMonths: 1,
+  computeActiveDate: false,
   minimumDate: null,
   maximumDate: null,
   colorPrimary: '#0eca2d',

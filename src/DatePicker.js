@@ -8,6 +8,7 @@ import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE, TYPE_RANGE } from './shared/constant
 const DatePicker = ({
   value,
   onChange,
+  computeActiveDate,
   formatInputText,
   inputPlaceholder,
   inputClassName,
@@ -167,6 +168,7 @@ const DatePicker = ({
             <Calendar
               value={value}
               onChange={handleCalendarChange}
+              computeActiveDate={computeActiveDate}
               calendarClassName={calendarClassName}
               calendarTodayClassName={calendarTodayClassName}
               calendarSelectedDayClassName={calendarSelectedDayClassName}
@@ -198,6 +200,7 @@ const DatePicker = ({
 
 DatePicker.defaultProps = {
   numberOfMonths: 1,
+  computeActiveDate: false,
   wrapperClassName: '',
   locale: 'en',
   calendarPopperPosition: 'auto',
