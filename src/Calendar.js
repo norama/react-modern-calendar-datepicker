@@ -9,7 +9,7 @@ import CalendarMonth from './components/CalendarMonth';
 const Calendar = ({
   value,
   onChange,
-  computeActiveDate,
+  computeActiveDateRef,
   onDisabledDayError,
   calendarClassName,
   calendarTodayClassName,
@@ -60,12 +60,12 @@ const Calendar = ({
   const { weekDays: weekDaysList, isRtl } = useLocaleLanguage(locale);
   const today = getToday();
 
-  const getComputedActiveDate = () => {
-    const valueType = getValueType(value);
+  const getComputedActiveDate = (activeValue) => {
+    const valueType = getValueType(activeValue);
     let v;
-    if (valueType === TYPE_MUTLI_DATE && value.length) v = value[0];
-    if (valueType === TYPE_SINGLE_DATE && value) v = value;
-    if (valueType === TYPE_RANGE && value.from) v = value.from;
+    if (valueType === TYPE_MUTLI_DATE && activeValue.length) v = activeValue[0];
+    if (valueType === TYPE_SINGLE_DATE && activeValue) v = activeValue;
+    if (valueType === TYPE_RANGE && activeValue.from) v = activeValue.from;
     v = v || toDayInRange(shallowClone(today), minimumDate, maximumDate);
     while (isBeforeDate(maximumDate, getDeltaMonth(v, numberOfMonths - 1))) {
         v = getDeltaMonth(v, -1);
@@ -73,18 +73,18 @@ const Calendar = ({
     return v;
   };
 
-  useEffect(() => {
-      if (computeActiveDate) {
+  if (computeActiveDateRef) {
+    computeActiveDateRef.current = (activeValue = value) => {
         setMainState({
             ...mainState,
-            activeDate: getComputedActiveDate()
-        });
-      }
-  }, [computeActiveDate]);
+            activeDate: getComputedActiveDate(activeValue)
+        })
+    }
+  }
 
   const activeDate = mainState.activeDate
     ? shallowClone(mainState.activeDate)
-    : getComputedActiveDate();
+    : getComputedActiveDate(value);
 
   const weekdays = weekDaysList.map(weekDay => (
     <abbr key={weekDay.name} title={weekDay.name} className="Calendar__weekDay">
@@ -202,7 +202,6 @@ const Calendar = ({
 
 Calendar.defaultProps = {
   numberOfMonths: 1,
-  computeActiveDate: false,
   minimumDate: null,
   maximumDate: null,
   colorPrimary: '#0eca2d',

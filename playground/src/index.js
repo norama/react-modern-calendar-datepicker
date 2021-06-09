@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import '../../src/DatePicker.css';
 import DatePicker from '../../src';
+import { Calendar } from '../../src/Calendar';
 import * as serviceWorker from './serviceWorker';
 
 const App = () => {
@@ -24,15 +25,29 @@ const AppRange = () => {
       from: null,
       to: null
     });
+    const computeActiveDateRef = useRef(null);
+
+    const handleClick = () => {
+        if (computeActiveDateRef.current) {
+            computeActiveDateRef.current(/* { year: 1980, month: 1, day: 5 } */);
+        }
+    };
+
     return (
-      <DatePicker
-        value={selectedDayRange}
-        onChange={(v) => {console.log(v); setSelectedDayRange(v);}}
-        numberOfMonths={3}
-        minimumDate={{year: 2018, month: 11, day: 8}}
-        maximumDate={{year: 2021, month: 6, day: 5}}
-        shouldHighlightWeekends
-      />
+      <div style={{ width: '100%' }}>
+        <Calendar
+            value={selectedDayRange}
+            computeActiveDateRef={computeActiveDateRef}
+            onChange={(v) => {console.log(v); setSelectedDayRange(v);}}
+            numberOfMonths={3}
+            minimumDate={{year: 2018, month: 11, day: 8}}
+            maximumDate={{year: 2021, month: 6, day: 5}}
+            shouldHighlightWeekends
+        />
+        <div style={{ margin: '20px', width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <button style={{ padding: '5px', cursor: 'pointer' }} onClick={handleClick}>Recalc</button>
+        </div>
+      </div>
     );
   };
 

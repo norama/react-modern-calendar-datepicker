@@ -17,7 +17,7 @@ type CustomDayClassNameItem = Day & { className: string };
 export interface CalendarProps<TValue extends Value> {
   value: TValue;
   onChange?(value: TValue): void;
-  computeActiveDate?: boolean;
+  computeActiveDateRef?: React.Ref<(value?: Value) => void>;
   onDisabledDayError?(value: Day): void;
   selectorStartingYear?: number;
   selectorEndingYear?: number;
